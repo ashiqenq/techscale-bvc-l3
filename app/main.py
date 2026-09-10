@@ -3,10 +3,12 @@
 
 from fastapi import FastAPI
 from pydantic import BaseModel
+import logging
 from order_routes import router as order_router
 
 app = FastAPI(title="TechScale API", version="1.0.0")
 app.include_router(order_router)
+logger = logging.getLogger(__name__)
 
 
 class HealthResponse(BaseModel):
@@ -21,6 +23,7 @@ class ProcessRequest(BaseModel):
 
 @app.get("/health", response_model=HealthResponse)
 def health_check():
+    logger.info("Health check requested")
     return HealthResponse(status="healthy", version="1.0.0")
 
 
