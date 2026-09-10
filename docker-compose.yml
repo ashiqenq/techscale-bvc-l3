@@ -1,0 +1,20 @@
+# TechScale: Local development environment
+
+version: "3.9"
+
+services:
+  api:
+    build: .
+    restart: on-failure
+
+    # TODO: Map port 8000 on the host to port 8000 in the container.
+    ports:
+      - "8000:8000"
+
+    # TODO: Set APP_ENV to development.
+    environment:
+      APP_ENV: development
+
+    # TODO: Mount the app/ directory so code changes are reflected without rebuilding the image.
+    volumes:
+      - ./app:/app/app

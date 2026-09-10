@@ -1,0 +1,57 @@
+# TechScale: CI pipeline
+# Three jobs run in sequence — each must pass before the next one starts.
+# The order enforces the quality gate: code style first, correctness second, build last.
+
+name: TechScale CI
+
+# TODO 1: Define when this pipeline runs.
+# It should trigger on push to main and on pull requests targeting main.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+
+  # TODO 2: lint job
+  # Runs on the latest Ubuntu runner. Checks out the code, sets up Python 3.11,
+  # installs flake8, and lints the app/ directory with a max line length of 100.
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install flake8
+      - run: flake8 app --max-line-length=100
+
+  # TODO 3: test job
+  # Runs only after lint passes. Checks out the code, sets up Python 3.11,
+  # installs dependencies, and runs the test suite under app/tests/.
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: pytest app/tests
+
+  # TODO 4: build job
+  # Runs only after tests pass. Checks out the code and builds the Docker image,
+  # tagging it with the current commit SHA.
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          tags: techscale:${{ github.sha }}
