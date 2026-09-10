@@ -23,7 +23,7 @@ class ProcessRequest(BaseModel):
 
 @app.get("/health", response_model=HealthResponse)
 def health_check():
-    logger.info("Health check requested")
+    logger.info("Health check requested", extra={"endpoint": "/health"})
     return HealthResponse(status="healthy", version="1.0.0")
 
 
