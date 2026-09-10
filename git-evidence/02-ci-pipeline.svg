@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="500">
+<rect width="100%" height="100%" fill="#111827"/>
+<text x="28" y="42" fill="#93c5fd" font-family="Consolas,monospace" font-size="24">Git evidence — CI pipeline</text>
+<text x="28" y="92" fill="#d1d5db" font-family="Consolas,monospace" font-size="18">on: push(main), pull_request(main)</text>
+<text x="28" y="140" fill="#86efac" font-family="Consolas,monospace" font-size="18">lint  →  test  →  build</text>
+<text x="28" y="188" fill="#d1d5db" font-family="Consolas,monospace" font-size="18">lint: flake8 app --max-line-length=100</text>
+<text x="28" y="236" fill="#d1d5db" font-family="Consolas,monospace" font-size="18">test: pytest app/tests</text>
+<text x="28" y="284" fill="#d1d5db" font-family="Consolas,monospace" font-size="18">build: Docker image tagged with github.sha</text>
+<text x="28" y="360" fill="#fbbf24" font-family="Consolas,monospace" font-size="18">Workflow is committed locally; GitHub Actions confirmation requires push access.</text>
+</svg>
